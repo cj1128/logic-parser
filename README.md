@@ -2,6 +2,33 @@
 
 A simple library to parse _logic expression_ to AST.
 
+## Install && Use
+
+The package is on NPM and in CJS format: `npm install @cjting/logic-parser`
+
+```javascript
+import LogicParser from '@cjting/logic-parser'
+
+// @param unitRegexp: a regexp to define what unit is like
+const parser = new LogicParser(/\d+/) //
+
+// return AST if input is valid, throw error otherwise
+parser.parse('1 && 2 || 3')
+
+// `left` and `right` are either object or simple strings captured by `unitRegexp`
+/*
+{
+  type: 'or',
+  left: {
+    type: 'and',
+    left: '1',
+    right: '2',
+  },
+  right: '3',
+}
+*/
+```
+
 ## Grammar
 
 Formal definition:
@@ -28,31 +55,6 @@ Examples (suppose `unit=\d+`):
 - `1 && 2 || 3`
 - `1 && (2 || 3)`
 - `1 && (2 || 3 && 4 || 5)`
-
-## API
-
-```javascript
-import LogicParser from '@cjting/logic-parser'
-
-// @param unitRegexp: a regexp to define what unit is like
-const parser = new LogicParser(/\d+/) //
-
-// return AST if input is valid, throw error otherwise
-parser.parse('1 && 2 || 3')
-
-// `left` and `right` are either object or simple strings captured by `unitRegexp`
-/*
-{
-  type: 'or',
-  left: {
-    type: 'and',
-    left: '1',
-    right: '2',
-  },
-  right: '3',
-}
-*/
-```
 
 ## Dev
 
