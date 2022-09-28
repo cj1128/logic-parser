@@ -48,6 +48,14 @@ describe('Logic parsing', () => {
     })
   })
 
+  it('nested parens', () => {
+    expect(p.parse('((1 && 2))')).to.deep.equal({
+      type: 'and',
+      left: '1',
+      right: '2',
+    })
+  })
+
   it('complicated case', () => {
     expect(p.parse('1 && (2 || 3 && 4 || 5)')).to.deep.equal({
       type: 'and',
