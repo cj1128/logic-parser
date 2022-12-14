@@ -1,12 +1,15 @@
 {
   "name": "@cjting/logic-parser",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A simple library to parse logic expression to AST",
-  "main": "logic-parser.esm.js",
+  "main": "dist/logic-parser.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "gen": "nearleyc lib/logic.ne -o tmp/logic.js && cp tmp/logic.js lib/logic.modified.js",
-    "pub": "npm run build && cp package.json dist && cd dist && npm pub --access public",
-    "build": "esbuild --format=cjs --bundle --outfile=dist/logic-parser.esm.js --minify lib/index.js",
+    "gen": "nearleyc lib/logic.ne -o lib/logic.js",
+    "pub": "npm run build && npm pub --access public",
+    "build": "esbuild --format=cjs --bundle --outfile=dist/logic-parser.js --minify lib/index.js",
     "test": "mocha"
   },
   "repository": {

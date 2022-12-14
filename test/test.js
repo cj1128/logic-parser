@@ -24,25 +24,38 @@ describe('Logic parsing', () => {
     })
   })
 
-  it('&& and ||', () => {
-    expect(p.parse('1 && 2 || 3')).to.deep.equal({
+  it('simple !', () => {
+    expect(p.parse('!1')).to.deep.equal({
+      type: 'not',
+      op: '1',
+    })
+  })
+
+  it('&& and || and !', () => {
+    expect(p.parse('1 && 2 || !3')).to.deep.equal({
       type: 'or',
       left: {
         type: 'and',
         left: '1',
         right: '2',
       },
-      right: '3',
+      right: {
+        type: 'not',
+        op: '3',
+      },
     })
   })
 
   it('parens', () => {
-    expect(p.parse('1 && (2 || 3)')).to.deep.equal({
+    expect(p.parse('1 && (!2 || 3)')).to.deep.equal({
       type: 'and',
       left: '1',
       right: {
         type: 'or',
-        left: '2',
+        left: {
+          type: 'not',
+          op: '2',
+        },
         right: '3',
       },
     })
@@ -57,7 +70,7 @@ describe('Logic parsing', () => {
   })
 
   it('complicated case', () => {
-    expect(p.parse('1 && (2 || 3 && 4 || 5)')).to.deep.equal({
+    expect(p.parse('1 && (2 || !3 && 4 || 5)')).to.deep.equal({
       type: 'and',
       left: '1',
       right: {
@@ -67,7 +80,10 @@ describe('Logic parsing', () => {
           left: '2',
           right: {
             type: 'and',
-            left: '3',
+            left: {
+              type: 'not',
+              op: '3',
+            },
             right: '4',
           },
         },
