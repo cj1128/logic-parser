@@ -14,6 +14,8 @@ const lexer = moo.compile({
 
 @lexer lexer
 
+main -> _ expr _ {% d => d[1] %}
+
 expr -> expr _ "||" _ term {% d => ({type: "or", left: d[0], right: d[4]}) %}
   | term {% id %}
 

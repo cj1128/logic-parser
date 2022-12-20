@@ -1,6 +1,6 @@
 {
   "name": "@cjting/logic-parser",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A simple library to parse logic expression to AST",
   "main": "dist/logic-parser.js",
   "files": [
